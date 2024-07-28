@@ -38,7 +38,7 @@ h1 {
 
 table {
     border-collapse: collapse;
-    width: 50%; /* Adjust width as needed */
+    width: 50%; 
     font-family: Arial, sans-serif; 
     font-size: 14px;
     margin: 0 auto;
@@ -47,7 +47,7 @@ table {
 }
 
 td {
-    padding: 10px 0; /* Adjust padding as needed */
+    padding: 10px 0; 
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
@@ -99,7 +99,7 @@ td, th {
 
 
 .deleteBtn {
-    background-color: #f44336; /* Red */
+    background-color: #f44336; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -115,7 +115,7 @@ td, th {
 }
 
 .editBtn {
-    background-color: #008CBA; /* Blue */
+    background-color: #008CBA; 
     border: none;
     color: white;
     padding: 15px 32px;
@@ -131,7 +131,7 @@ td, th {
 }
 
 .completeBtn {
-    background-color: #9d9e54; /* Green */
+    background-color: #9d9e54; 
     border: none;
     color: rgb(0, 0, 0);
     padding: 10px 20px;
