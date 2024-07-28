@@ -29,22 +29,20 @@ document.addEventListener('DOMContentLoaded', () => {
                 </tr>
             </thead>
         `
+        const tBody = document.createElement('tbody')
         tasks.forEach(task => {
             const taskItem = document.createElement('tr')
             taskItem.innerHTML = `
-            <tbody>
-                <tr>
-                    <td><span class="task-title">${task.title}</span>:</td>
-                    <td><span class="task-description">${task.description}</span></td>
-                    <td><button class="completeBtn" disabled>${task.status ? '✔' : '✖'}</button></td>
-                    <td>
-                        <button class="editBtn">Edit</button>
-                        <button class="deleteBtn">Delete</button>
-                    </td>
-                </tr>
-            </tbody>
+                <td><span class="task-title">${task.title}</span>:</td>
+                <td><span class="task-description">${task.description}</span></td>
+                <td><button class="completeBtn" disabled>${task.status ? '✔' : '✖'}</button></td>
+                <td>
+                    <button class="editBtn">Edit</button>
+                    <button class="deleteBtn">Delete</button>
+                </td>
             `
-            taskList.appendChild(taskItem)
+            tBody.appendChild(taskItem)
+            taskList.appendChild(tBody)
 
             // Event listeners of edit, delete and complete 
             const completeBtn = taskItem.querySelector('.completeBtn')
