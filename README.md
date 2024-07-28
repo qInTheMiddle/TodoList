@@ -1,5 +1,5 @@
-# TodoList
-No frontend frameworks
-npm install 
-npm run dev
-open localhost:3000 in browser 
+-# TodoList
+-No frontend frameworks
+-npm install 
+-npm run dev
+-open localhost:3000 in browser 
