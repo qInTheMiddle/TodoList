@@ -1,0 +1,151 @@
+body {
+    background: rgb(14,107,95);
+    background: linear-gradient(90deg, rgba(14,107,95,0.927608543417367) 100%, rgba(1,213,196,1) 100%);
+    text-align: center;
+}
+
+h1 {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    /* text-decoration: underline; */
+}
+
+.task-description {
+    color: white;
+    border: none;   
+}
+
+.task-title {
+    font-size: 18px;
+}
+
+h1 {
+    color: white;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+}
+
+table {
+    border-collapse: collapse;
+    width: 50%; /* Adjust width as needed */
+    font-family: Arial, sans-serif; 
+    font-size: 14px;
+    margin: 0 auto;
+    color: hsl(0, 0, 0); 
+    background: rgb(17, 129, 114)   
+}
+
+td {
+    padding: 10px 0; /* Adjust padding as needed */
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+th {
+    padding: 10px 0;
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ddd;
+    text-align: center;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+}
+
+td, th {
+    border-top: 1px solid #ddd;
+    border-left: 1px solid #ddd;
+    border-radius: 5px;
+}   
+
+#addTaskBtn {
+/* .addBtn { */
+    background: transparent;
+    background-color: #4CAF50; 
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    /* clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); */
+    /* clip-path: polygon(0 100%, 100% 100%, 80% 0, 20% 0); */
+    box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.2);
+    width: 100px;
+    height: 100px;
+    transform: rotate(45deg);
+    clip-path: polygon(50% 0%, 61% 35%, 100% 35%, 68% 61%, 80% 100%, 50% 78%, 20% 100%, 32% 61%, 0% 35%, 39% 35%);
+    transition: transform 0.3s ease-in-out; 
+    /* clip-path: polygon(25% 0%, 100% 25%, 75% 100%, 0% 75%); */
+    /* transition: transform 0.3s ease-in-out; */
+}
+
+#addTaskBtn:hover {
+    transform: rotate(-45deg); 
+}
+
+
+.deleteBtn {
+    background-color: #f44336; /* Red */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+    height: 50px;
+    width: 80px;
+    font-size: 12px;
+}
+
+.editBtn {
+    background-color: #008CBA; /* Blue */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 20px;
+    box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.2);
+    height: 50px;
+    width: 80px;
+    font-size: 12px;
+}
+
+.completeBtn {
+    background-color: #9d9e54; /* Green */
+    border: none;
+    color: rgb(0, 0, 0);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 5px;
+    box-shadow: 0px 5px 10px rgba(0, 0,0, 0.2);
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .completeBtn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
