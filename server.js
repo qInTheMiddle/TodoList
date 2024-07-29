@@ -11,9 +11,9 @@ app.use(express.static(path.join(__dirname, 'public')))
 app.use(express.json())
 
 //routes
-
+// for index.html
 app.get('/', (req, res) => {
-    res.send('Hello NODE API')
+    res.sendFile(path.join(__dirname, 'public', 'index.html'))
 })
 
 app.get('/blog', (req, res) => {
