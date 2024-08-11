@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const taskDescriptionInput = document.getElementById('taskDescription')
     const addTaskBtn = document.getElementById('addTaskBtn')
     const taskList = document.getElementById('taskList')
+    const errorMessage = document.getElementById('errorMessage') // Add this line
 
     // Fetch tasks
     async function fetchTasks() {
@@ -46,6 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
             tBody.appendChild(taskItem)
             taskList.appendChild(tBody)
 
+
             // Event listeners of edit, delete and complete 
             const completeBtn = taskItem.querySelector('.completeBtn')
             completeBtn.addEventListener('click', () => {
@@ -82,12 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             if (response.ok) {
-                fetchTasks()  
+                fetchTasks()
+                displayError('')
             } else {
-                console.error('Error adding:', response.statusText)
+                const errorText = await response.text()
+                console.error('Error adding:', errorText)
+                displayError('Error adding task: ' + errorText)
             }
         } catch (error) {
             console.error('Error adding:', error)
+            displayError('Error adding task: ' + error.message)
         }
     }
 
@@ -104,16 +110,20 @@ document.addEventListener('DOMContentLoaded', () => {
             if (response.ok) { 
                 
                 fetchTasks()
+                displayError('')
             } else {
                 console.error('updating not possible at the moment:', response.statusText)
+                const errorText = await response.text()
+                displayError('Error updating task: ' + errorText)
             }
         } catch (error) {
             console.error('nope update not working:', error)
+            displayError('Error updating task: ' + error.message)
         }
     }
 
     // allow edit
-    function allowEdit(taskItem, id) {
+    async function allowEdit(taskItem, id) {
         const editBtn = taskItem.querySelector('.editBtn')
         const titleElement = taskItem.querySelector('.task-title')
         const descriptionElement = taskItem.querySelector('.task-description')
@@ -126,6 +136,16 @@ document.addEventListener('DOMContentLoaded', () => {
             titleElement.focus()
             editBtn.textContent = 'Save'
         } else {
+            const title = titleElement.textContent.trim();
+            const description = descriptionElement.textContent.trim();
+        
+            // Client-side validation because validation is not working for update in the same way 
+            // due to it happenning in different stages allow edit, savechanges and changeStatus i think
+            if (title.length < 3 || description.length < 3) {
+                displayError('Title and description must be at least 3 characters long.');
+            return;
+            }
+
             titleElement.setAttribute('contenteditable', 'false')
             descriptionElement.setAttribute('contenteditable', 'false')
             completeBtn.disabled = true
@@ -137,12 +157,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 status: completeBtn.textContent === '✔'
             }
 
+
             saveTask(id, updatedTask);
+          
         }
     }
 
-     // Save changes
-        async function saveTask(id, updatedTask) {
+    // Save changes
+    async function saveTask(id, updatedTask) {
         try {
             const response = await fetch(`/tasks/${id}`, {
                 method: 'PUT',
@@ -153,12 +175,16 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             if (response.ok) {
-                fetchTasks()  
+                fetchTasks()
+                displayError('')
             } else {
                 console.error('update not working:', response.statusText)
+                const errorText = await response.text()
+                displayError('Error update task: ' + errorText)
             }
         } catch (error) {
             console.error('update is not working:', error)
+            displayError('Error updating task: ' + error.message)
         }
     }
 
@@ -171,11 +197,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
             if (response.ok) {
                 fetchTasks() 
+                displayError('')
             } else {
                 console.error('Deleting not possible:', response.statusText)
+                const errorText = await response.text()
+                displayError('Error deleting task: ' + errorText)
             }
         } catch (error) {
             console.error('Deleting not possible:', error)
+            displayError('Error delete task: ' + error.message)
+        }
+    }
+
+    function displayError(message) {
+        const errorMessage = document.getElementById('errorMessage');
+        
+        // If no message make it
+        if (!errorMessage) {
+            const errorElement = document.createElement('div');
+            errorElement.id = 'errorMessage'
+            errorElement.style.color = 'red'
+            errorElement.textContent = message
+            document.body.appendChild(errorElement)
+        } else {
+            // Update error 
+            errorMessage.textContent = message
         }
     }
 
