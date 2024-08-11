@@ -149,3 +149,8 @@ td, th {
     background-color: #ccc;
     cursor: not-allowed;
   }
+
+#errorMessage {
+    color: red;
+    margin-top: 20px;
+}
