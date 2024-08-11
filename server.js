@@ -1,3 +1,5 @@
+require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
 const Task = require('./models/taskModel')
@@ -120,8 +122,8 @@ mongoose.
 connect('mongodb+srv://qutaibaalmadhagi:RaY6RbSba1ugKLTL@todoapi.pfciykq.mongodb.net/?retryWrites=true&w=majority&appName=TodoAPI')
 .then(() => {
     console.log('connected to MongoDB')
-    app.listen(3000, ()=> {
-        console.log("Node API app is running on port 3000")
+    app.listen(process.env.PORT, ()=> {
+        console.log("Node API app is running on port", process.env.PORT)
     })
     
 }).catch((error) => {
