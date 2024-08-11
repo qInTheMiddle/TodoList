@@ -34,7 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
         tasks.forEach(task => {
             const taskItem = document.createElement('tr')
             taskItem.innerHTML = `
-                <tr>
+                
                     <td><span class="task-title">${task.title}</span>:</td>
                     <td><span class="task-description">${task.description}</span></td>
                     <td><button class="completeBtn" disabled>${task.status ? '✔' : '✖'}</button></td>
@@ -42,7 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button class="editBtn">Edit</button>
                         <button class="deleteBtn">Delete</button>
                     </td>
-                </tr>
+                
             `
             tBody.appendChild(taskItem)
             taskList.appendChild(tBody)
