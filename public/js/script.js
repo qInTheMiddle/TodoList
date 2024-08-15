@@ -37,7 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                     <td><span class="task-title">${task.title}</span>:</td>
                     <td><span class="task-description">${task.description}</span></td>
-                    <td><button class="completeBtn" disabled>${task.status ? '✔' : '✖'}</button></td>
+                    <td>
+                        <select class="task-status" disabled>
+                            <option value="pending" ${ task.status === 'pending'?'selected' : ''}>pending</option>
+                            <option value="in-progress" ${ task.status === 'in-progress'?'selected' : ''}>in-progress</option>
+                            <option value="completed" ${ task.status === 'completed'?'selected' : ''}>completed</option>
+                            <option value="blocked" ${ task.status === 'blocked'?'selected' : ''}>blocked</option>
+                        </select>
+                    </td>
                     <td>
                         <button class="editBtn">Edit</button>
                         <button class="deleteBtn">Delete</button>
@@ -49,12 +56,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
             // Event listeners of edit, delete and complete 
-            const completeBtn = taskItem.querySelector('.completeBtn')
-            completeBtn.addEventListener('click', () => {
-                if (completeBtn.disabled === false) {
-                    changeStatus(task._id, task.status)
-                }
-            })
+            // const completeBtn = taskItem.querySelector('.completeBtn')
+            // completeBtn.addEventListener('click', () => {
+            //     if (completeBtn.disabled === false) {
+            //         changeStatus(task._id, task.status)
+            //     }
+            // })
 
             const editBtn = taskItem.querySelector('.editBtn');
             editBtn.addEventListener('click', () => allowEdit(taskItem, task._id))
@@ -69,7 +76,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const newTask = {
             title: taskTitleInput.value,
             description: taskDescriptionInput.value,
-            status: false
+            status: 'pending'
         }
 
         
@@ -97,42 +104,42 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // change status
-    async function changeStatus(id, currentStatus) {
-        try {
-            const response = await fetch(`/tasks/${id}`, {
-                method: 'PUT',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ status: !currentStatus }),
-            })
-            if (response.ok) { 
+    // // change status
+    // async function changeStatus(id, currentStatus) {
+    //     try {
+    //         const response = await fetch(`/tasks/${id}`, {
+    //             method: 'PUT',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify({ status: !currentStatus }),
+    //         })
+    //         if (response.ok) { 
                 
-                fetchTasks()
-                displayError('')
-            } else {
-                console.error('updating not possible at the moment:', response.statusText)
-                const errorText = await response.text()
-                displayError('Error updating task: ' + errorText)
-            }
-        } catch (error) {
-            console.error('nope update not working:', error)
-            displayError('Error updating task: ' + error.message)
-        }
-    }
+    //             fetchTasks()
+    //             displayError('')
+    //         } else {
+    //             console.error('updating not possible at the moment:', response.statusText)
+    //             const errorText = await response.text()
+    //             displayError('Error updating task: ' + errorText)
+    //         }
+    //     } catch (error) {
+    //         console.error('nope update not working:', error)
+    //         displayError('Error updating task: ' + error.message)
+    //     }
+    // }
 
     // allow edit
     async function allowEdit(taskItem, id) {
         const editBtn = taskItem.querySelector('.editBtn')
         const titleElement = taskItem.querySelector('.task-title')
         const descriptionElement = taskItem.querySelector('.task-description')
-        const completeBtn = taskItem.querySelector('.completeBtn')
+        const statusElement = taskItem.querySelector('.task-status')
         
         if (editBtn.textContent === 'Edit') {
             titleElement.setAttribute('contenteditable', 'true')
             descriptionElement.setAttribute('contenteditable', 'true')
-            completeBtn.disabled = false
+            statusElement.disabled = false
             titleElement.focus()
             editBtn.textContent = 'Save'
         } else {
@@ -148,13 +155,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
             titleElement.setAttribute('contenteditable', 'false')
             descriptionElement.setAttribute('contenteditable', 'false')
-            completeBtn.disabled = true
+            statusElement.disabled = true
             editBtn.textContent = 'Edit'
 
             const updatedTask = {
                 title: titleElement.textContent,
                 description: descriptionElement.textContent,
-                status: completeBtn.textContent === '✔'
+                status: statusElement.value
             }
 
 
