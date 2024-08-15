@@ -29,11 +29,12 @@ const todoValidation = data => {
         .min(3)
         .max(30)
         .required(),
-        status: joi.boolean()
+        status: joi.string()
+        // status: joi.boolean()
         .required() // Include status validation
-    }).unknown()
+    }).unknown();
 
-    return schema.validate(data)
+    return schema.validate(data);
 }
 
-module.exports.todoValidation = todoValidation
+module.exports.todoValidation = todoValidation;
