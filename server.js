@@ -1,20 +1,29 @@
+require('dotenv').config()
+
 const express = require('express')
 const mongoose = require('mongoose')
 const Task = require('./models/taskModel')
-const path = require('path')
+const path = require('path');
+const { todoValidation } = require('./validation')
+
 
 const app = express()
-app.use(express.json())
-app.use(express.static(path.join(__dirname, 'public')))
+app.use(express.json());
+app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(express.json())
 
 //routes
-// for index.html
+
+// Route to serve index.html
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public', 'index.html'))
-})
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+// app.get('/', (req, res) => {
+//     res.send('Hello NODE API')
+// })
 
 app.get('/blog', (req, res) => {
     res.send('Hello Blog My name is Hamood')
@@ -46,8 +55,17 @@ app.get('/tasks/:id', async(req, res) => {
 
 
 app.post('/tasks', async(req, res) => {
+    const {error} = todoValidation(req.body)
     // console.log(req.body)
     // res.send(req.body)
+    if (error) {
+        return res.status(400).send(error.details[0].message)   
+    } 
+    // else {
+        console.log('data is being sent to mongoDB database ...')
+    //     res.status(200).json({message: 'data saved'})
+    // }
+
     try {
         const task = await Task.create(req.body)
         res.status(200).json(task)
@@ -59,6 +77,16 @@ app.post('/tasks', async(req, res) => {
 
 // update a task
 app.put('/tasks/:id', async(req, res) =>{
+    const {error} = todoValidation(req.body)
+
+    if (error) {
+        return res.status(400).send(error.details[0].message)   
+    } 
+  
+        console.log('data is being sent to mongoDB database ...')
+   
+
+
     try {
         const {id} = req.params
         const task = await Task.findByIdAndUpdate(id, req.body)
@@ -94,8 +122,8 @@ mongoose.
 connect('mongodb+srv://qutaibaalmadhagi:RaY6RbSba1ugKLTL@todoapi.pfciykq.mongodb.net/?retryWrites=true&w=majority&appName=TodoAPI')
 .then(() => {
     console.log('connected to MongoDB')
-    app.listen(3000, ()=> {
-        console.log("Node API app is running on port 3000")
+    app.listen(process.env.PORT, ()=> {
+        console.log("Node API app is running on port", process.env.PORT)
     })
     
 }).catch((error) => {

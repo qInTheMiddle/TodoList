@@ -11,7 +11,8 @@ const taskSchema = mongoose.Schema(
             required: [true, "Please enter description of task"]
         },
         status: {
-            type: Boolean,
+            type: String,
+            // type: Boolean,
             required: [true, "Please specify completion status"]
         }
     }
